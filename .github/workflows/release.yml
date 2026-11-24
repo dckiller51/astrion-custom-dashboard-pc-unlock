@@ -45,7 +45,7 @@ jobs:
       - name: Collect
         run: |
           mkdir -p out
-          .github/scripts/merge_bin.sh ${{ matrix.env }} out/astrion-pc-unlock-${{ matrix.env }}.factory.bin
+          bash .github/scripts/merge_bin.sh ${{ matrix.env }} out/astrion-pc-unlock-${{ matrix.env }}.factory.bin
           cp .pio/build/${{ matrix.env }}/firmware.bin out/astrion-pc-unlock-${{ matrix.env }}.ota.bin
           ls -l out
 
