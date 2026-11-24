@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astrion PC Unlock installer</title>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10.1.0/dist/web/install-button.js?module"></script>
+  <style>
+    :root { --bg: #ffffff; --text: #1d2327; --muted: #5b6770; --accent: #0097a7; --card: #f4f6f8; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --bg: #0e1418; --text: #e6edf3; --muted: #9aa7b1; --accent: #00e5ff; --card: #172028; }
+    }
+    :root[data-theme="dark"] { --bg: #0e1418; --text: #e6edf3; --muted: #9aa7b1; --accent: #00e5ff; --card: #172028; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    main { max-width: 720px; margin: 0 auto; padding: 32px 16px 48px; }
+    h1 { font-size: 1.7rem; margin: 0 0 4px; }
+    .lead { color: var(--muted); margin: 0 0 24px; }
+    .card { background: var(--card); border-radius: 12px; padding: 20px; margin: 16px 0; }
+    .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+    ol { padding-left: 1.2em; } li { margin: 6px 0; }
+    code { background: rgba(127,127,127,.15); padding: 1px 5px; border-radius: 4px; }
+    a { color: var(--accent); }
+    esp-web-install-button { --esp-tools-button-color: var(--accent); --esp-tools-button-text-color: #000; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Astrion PC Unlock</h1>
+  <p class="lead">An ESP32-S3 plugged into your PC as a USB keyboard, that types your Windows PIN when the Astrion remote asks. The PIN stays on the ESP.</p>
+
+  <div class="card">
+    <p><strong>1. Install</strong>, in Chrome or Edge on a computer:</p>
+    <ol>
+      <li><strong>M5Stack AtomS3U</strong>: hold its reset button about 2 seconds until the small green LED lights (download mode), then plug it into this computer.<br>
+        <strong>Another ESP32-S3</strong>: hold <strong>BOOT</strong> while plugging its <em>USB</em> port (not <em>UART</em>/<em>COM</em>).</li>
+      <li>Click your board, pick the port, install. Then unplug it.</li>
+    </ol>
+    <div class="buttons">
+      <esp-web-install-button manifest="astrion-pc-unlock-atoms3u.manifest.json">
+        <button slot="activate">M5Stack AtomS3U</button>
+        <span slot="unsupported">Your browser can't flash: use Chrome or Edge on a computer.</span>
+        <span slot="not-allowed">Open this page over HTTPS.</span>
+      </esp-web-install-button>
+      <esp-web-install-button manifest="astrion-pc-unlock-esp32s3.manifest.json">
+        <button slot="activate">Another ESP32-S3</button>
+        <span slot="unsupported"></span>
+        <span slot="not-allowed"></span>
+      </esp-web-install-button>
+    </div>
+  </div>
+
+  <div class="card">
+    <p><strong>2. Set it up</strong>: plug it into the gaming PC. Its LED turns purple. From a phone, connect to the <code>Astrion-Unlock-xxxx</code> Wi-Fi and open <code>http://192.168.4.1</code>:</p>
+    <ol>
+      <li>Your <strong>Wi-Fi</strong> network and its password.</li>
+      <li>Your <strong>Windows PIN</strong> (kept on the ESP only) and the PC's <strong>keyboard layout</strong>.</li>
+      <li>Note the <strong>code for the remote</strong> (6 digits), then <strong>Save</strong>.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <p><strong>3. In Astrion</strong>: the remote's web page › <em>Devices</em> › your PC with Playnite › <strong>🔓 Unlock ESP</strong> › its IP address (in your router's list, name <code>astrion-unlock</code>) and the code.</p>
+    <p>Then picking a game while the PC sleeps wakes it, unlocks Windows and starts the game.</p>
+  </div>
+
+  <p class="lead">Source and guide: <a href="https://github.com/dckiller51/astrion-custom-dashboard-pc-unlock">github.com/dckiller51/astrion-custom-dashboard-pc-unlock</a></p>
+</main>
+</body>
+</html>

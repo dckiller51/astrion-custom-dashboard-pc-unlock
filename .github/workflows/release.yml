@@ -1,0 +1,72 @@
+name: Release
+
+# A tag v… builds the firmwares (AtomS3U, any ESP32-S3) and attaches them to the GitHub release;
+# pages.yml then publishes them with the browser installer.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Firmware (${{ matrix.env }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [atoms3u, esp32s3]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Version
+        id: version
+        run: |
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then v="${GITHUB_REF_NAME#v}"; else v="dev-${GITHUB_SHA::7}"; fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        env:
+          PLATFORMIO_BUILD_FLAGS: -DFIRMWARE_VERSION=\"${{ steps.version.outputs.version }}\"
+        run: pio run -e ${{ matrix.env }}
+
+      - name: Collect
+        run: |
+          mkdir -p out
+          .github/scripts/merge_bin.sh ${{ matrix.env }} out/astrion-pc-unlock-${{ matrix.env }}.factory.bin
+          cp .pio/build/${{ matrix.env }}/firmware.bin out/astrion-pc-unlock-${{ matrix.env }}.ota.bin
+          ls -l out
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: firmware-${{ matrix.env }}
+          path: out/*
+
+  release:
+    name: GitHub release
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          pattern: firmware-*
+          merge-multiple: true
+          path: out
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.bin
+          generate_release_notes: true
