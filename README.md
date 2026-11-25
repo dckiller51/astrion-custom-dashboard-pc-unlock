@@ -16,7 +16,8 @@ Made for Astrion's [Playnite](https://github.com/dckiller51/astrion-custom-dashb
 
 - An **ESP32-S3** with a native USB port. The **[M5Stack AtomS3U](https://docs.m5stack.com/en/homeassistant/kit/atoms3u)** plugs straight into a USB-A port, nothing else needed. Any other ESP32-S3 board works too (ESP32-S3 SuperMini, DevKitC…), on its *USB* port.
 - A Windows PIN (Windows Hello), digits and/or letters.
-- Astrion 1.6.3 or later, and the Playnite extension 0.1.2 or later.
+- Tested on an M5Stack AtomS3U, on a Windows PC with an AZERTY keyboard (cold start and sleep).
+- Astrion 1.6.3 or later, and the Playnite extension 0.1.3 or later (0.1.2 works from a cold start, 0.1.3 also after a sleep).
 
 ## Install
 
@@ -46,7 +47,7 @@ To unlock, the ESP presses **Ctrl** (it shows the PIN field without typing anyth
 
 `http://<its IP>` shows its state: Wi-Fi, the PC's USB port (`active`, `suspended` when the PC sleeps, `off`), whether a PIN is saved.
 
-- **Settings** are closed in normal use: **press the button**, then open its page within 3 minutes (the LED turns purple). The PIN and the Wi-Fi password are never shown, only replaced.
+- **Settings** are closed in normal use: **press the button**, then open `http://<its IP>` within 3 minutes (the LED turns purple). The setup Wi-Fi (`Astrion-Unlock-xxxx`) only comes back after an erase, or when your Wi-Fi can't be joined: no need to flash it again to change a setting. The PIN and the Wi-Fi password are never shown, only replaced.
 - **Hold the button 10 seconds**: everything is erased, back to the setup Wi-Fi.
 - If it can't join your Wi-Fi within 90 seconds (a new password?), the setup Wi-Fi comes back.
 
