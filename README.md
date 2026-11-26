@@ -56,7 +56,7 @@ LED: purple, settings open; blue, joining the Wi-Fi; green flash, PIN typed; red
 ## Good to know
 
 - **The ESP is powered by the PC.** If the PC's USB ports are off when it sleeps, the ESP is off too: it comes back a few seconds after the wake. Some BIOSes can keep USB powered in sleep (*USB power in S3/S5*).
-- **Waking through USB** works when Windows lets the keyboard wake the PC (*Device Manager › Keyboards › Properties › Power Management › Allow this device to wake the computer*). Otherwise Wake-on-LAN does it.
+- **Waking through USB** works when Windows lets the keyboard wake the PC: *Device Manager › Keyboards*, the *HID Keyboard Device* that disappears when you unplug the ESP › *Properties › Power Management › Allow this device to wake the computer* (firmware 0.1.1 or later: unplug and plug it back after the update for the tab to show). Otherwise Wake-on-LAN does it.
 - **Keyboard layout**: Windows types what the layout says: an AZERTY PC needs **AZERTY** (its digits are shifted). The numeric keypad needs Num Lock on at the sign-in screen.
 - **Windows signs in by itself** (no PIN at the sign-in, or *"require sign-in: never"* after sleep)? Then you don't need this ESP: it would type the PIN into whatever is open.
 - **Security**: anyone who can use your Astrion remote, or knows the ESP's code and is on your network, can unlock the PC. Five wrong codes block it for a minute. The PIN can't be read back from its page or from the remote.

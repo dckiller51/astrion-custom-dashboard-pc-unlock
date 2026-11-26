@@ -439,6 +439,9 @@ void setup() {
   led(0, 0, 20);
   USB.productName("Astrion PC Unlock");
   USB.manufacturerName("Astrion Custom Dashboard");
+  // Say it can wake the PC: without this bit, Windows offers no "Allow this device to wake the
+  // computer" and ignores the wake (the core's default is "self-powered" only).
+  USB.usbAttributes(TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP | TUSB_DESC_CONFIG_ATT_SELF_POWERED);
   keyboard.begin();
   USB.begin();
 

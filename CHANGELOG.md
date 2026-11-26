@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.1] - 2026-11-26
+
+- **Waking the PC through USB now works**: the ESP didn't tell Windows it can wake the PC, so Windows showed no *Allow this device to wake the computer* for it and ignored the wake. Unplug and plug it back after the update, then tick that box (*Device Manager › Keyboards*). Found by Zavie.
+
 ## [0.1.0] - 2026-11-24
 
 First version, for Astrion 1.6.3 and its Playnite extension 0.1.2.
